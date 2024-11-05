@@ -1,0 +1,93 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Configuración para arranque seguro en Debian</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="2"
+                  title="Configuración para arranque seguro en Debian"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Introducción" duration="2">
+        <p>En este CodeLab aprenderemos a configurar el arranque seguro en Debian, configurando archivos del GRUB. Para realizar esta configuración en mi caso, utilizaré una máquina virtual de VirtualBox en la cual he instalado Debian previamente.</p>
+<p class="image-container"><img alt="Foto máquina virtual" src="img\\940bafa22bc8510f.png"></p>
+<p>¿Estas preparad@ para empezar? ¡Vamos allá!</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Contraseña de arranque" duration="5">
+        <p>Para comenzar la configuración de arranque de Debian crearemos una contraseña de arranque. Para ello abriremos la línea de comandos y ejecutaremos el comando <code>su -</code> para ser usuario root. A continuación, vamos a editar el archivo de configuración utilizando el comando <code>sudo nano /etc/grub.d/40_custom</code>. Una vez lo editemos deberemos añadir al final las siguientes dos líneas:</p>
+<pre><code>set superusers=&#34;root&#34;
+password root CONTRASEÑA
+</code></pre>
+<p>Donde CONTRASEÑA será la que nosotros queramos.</p>
+<p>El archivo debería quedar algo parecido al siguiente.</p>
+<p class="image-container"><img alt="Foto archivo 40_custom" src="img\\f31613e5bb3ca683.png"></p>
+<p>A continuación guardaremos los cambios pulsando Ctrl+O y cerraremos el archivo con Ctrl+X.</p>
+<p>Finalmente tendremos que regenerar el fichero para guardar los cambios ejecutando el comando <code>sudo update-grub</code>.</p>
+<p>Ya tendremos nuestra contraseña, en el siguiente apartado veremos cómo cifrarla.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Cifrado de contraseña" duration="5">
+        <p>En este apartado veremos cómo cifrar la contraseña de arranque que hemos designado en el paso anterior. Para cifrar la contraseña deberemos ejecutar el comando <code>sudo grub-mkpasswd-pbkdf2</code> y nos devolverá la contraseña cifrada, la cual debemos copiar. Se verá algo como esto:</p>
+<p class="image-container"><img alt="Foto archivo 40_custom contraseña cifrada" src="img\\e78796d72ef1a942.png"></p>
+<p>A continuación, volveremos a editar el archivo <em>40_custom</em> como en el paso anterior y sustituir la línea en la que pusimos la contraseña por la siguiente:</p>
+<pre><code>password_pbkdf2 CONTRASEÑA_CIFRADA
+</code></pre>
+<p>Donde CONTRASEÑA_CIFRADA será la que hemos copiado previamente al ejecutar el comando de cifrado.</p>
+<p>El archivo deberá quedar algo así: <img alt="Foto archivo 40_custom contraseña cifrada" src="img\\cefe38a96968b346.png"></p>
+<p>Guardaremos de nuevo los cambios y cerraremos el archivo. Una vez hecho deberemos volver a regenerar el archivo con el comando <code>sudo update-grub</code>.</p>
+<p>En el siguiente paso trataremos algunos permisos. ¡Seguimos!</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Permisos en archivo de configuración" duration="5">
+        <p>Vamos a modificar los permisos en el archivo de configuración que hemos estado editando previamente para que solo pueda ser editado por el root. Para ello ejecutaremos el comando <code>sudo chmod 700 /etc/grub.d/40_custom</code>.</p>
+<p>Finalmente vamos a ver cómo ocultar el menú GRUB 2 al arrancar. Este paso es opcional pero ya falta poco para terminar. ¡Vamos!</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Ocultar el menú GRUB 2" duration="5">
+        <p>Para ocultar el menú de GRUB 2 al arrancar deberemos modificar el archivo <em>grub</em> utilizando el comando <code>nano /etc/default/grub</code> siendo usuario root. Una vez hemos accedido al archivo deberemos modificar el <em>GRUB_TIMEOUT</em> a 0, quedando el archivo de la siguiente manera:</p>
+<p class="image-container"><img alt="Foto archivo grub" src="img\\24bb97d68bb4a388.png"></p>
+<p>Guardaremos el archivo y saldremos. Finalmente volveremos a regenerar el archivo con el comando <code>update-grub</code>.</p>
+<p>Y... ¡ya habremos terminado la configuración de arranque en Debian!</p>
+<p>¡Espero que te haya sido útil!</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

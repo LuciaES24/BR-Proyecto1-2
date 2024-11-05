@@ -1,0 +1,24 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2024-11-05T17:12:54+01:00",
+  "id": "2",
+  "duration": 22,
+  "title": "Configuración para arranque seguro en Debian",
+  "summary": "Codelab en el que se explica paso a paso cómo bastionar el arranque en Debian",
+  "source": "codelab.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "grub",
+    "debian"
+  ],
+  "tags": [
+    "web"
+  ],
+  "url": "2"
+}
